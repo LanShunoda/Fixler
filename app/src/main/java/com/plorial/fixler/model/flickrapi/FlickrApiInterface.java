@@ -19,5 +19,6 @@ public interface FlickrApiInterface {
                                                @Nullable @Query("format") String format,
                                                @Nullable @Query("nojsoncallback") String one,
                                                @Nullable @Query("per_page") String perPage,
-                                               @Nullable @Query("page") String page);
+                                               @Nullable @Query("page") String page,
+                                               @Nullable @Query("extras") String extras);
 }
