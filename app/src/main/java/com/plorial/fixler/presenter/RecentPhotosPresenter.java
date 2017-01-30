@@ -25,12 +25,10 @@ public class RecentPhotosPresenter extends BasePresenter {
     private static final String TAG = RecentPhotosPresenter.class.getSimpleName();
 
     private RecentPhotosView mView;
-    private Model mModel;
     private int mCurrentPage = 0;
 
     public RecentPhotosPresenter(RecentPhotosView mView) {
         this.mView = mView;
-        mModel = new ModelImpl();
     }
 
     public void loadPhotos(){
@@ -46,19 +44,6 @@ public class RecentPhotosPresenter extends BasePresenter {
                 showError(throwable);
             }
         });
-        addSubscription(subscription);
-    }
-
-    public void loadBitmap(final ImageView imageView, URL url){
-        Subscription subscription = mModel.getPhotoFromUrl(url)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Bitmap>() {
-                    @Override
-                    public void call(Bitmap bitmap) {
-                        imageView.setImageBitmap(bitmap);
-                    }
-                });
         addSubscription(subscription);
     }
 

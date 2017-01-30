@@ -42,10 +42,9 @@ public class PhotoAdapter extends ArrayAdapter<Photo>{
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(resource, null);
         }
-
         Photo photo = super.getItem(position);
         if(photo != null){
-            final ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
+            ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
             DisplayMetrics metrics = new DisplayMetrics();
             ((AppCompatActivity)context).getWindowManager().getDefaultDisplay().getMetrics(metrics);
 

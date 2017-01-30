@@ -1,11 +1,13 @@
 package com.plorial.fixler.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.*;
+import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -16,7 +18,7 @@ import com.plorial.fixler.view.adapters.PhotoAdapter;
 
 import java.util.List;
 
-public class RecentPhotosActivity extends AppCompatActivity implements RecentPhotosView, AbsListView.OnScrollListener {
+public class RecentPhotosActivity extends AppCompatActivity implements RecentPhotosView, AbsListView.OnScrollListener, AdapterView.OnItemClickListener {
 
     public static final String TAG = RecentPhotosActivity.class.getSimpleName();
 
@@ -33,6 +35,7 @@ public class RecentPhotosActivity extends AppCompatActivity implements RecentPho
         gridView.setAdapter(mAdapter);
         mPresenter.loadPhotos();
         gridView.setOnScrollListener(this);
+        gridView.setOnItemClickListener(this);
     }
 
     @Override
@@ -66,5 +69,13 @@ public class RecentPhotosActivity extends AppCompatActivity implements RecentPho
         if(totalItemCount - (firstVisibleItem + visibleItemCount) < 4){
             mPresenter.loadPhotos();
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Photo photo = mAdapter.getItem(position);
+        Intent intent = new Intent(this, PhotoActivity.class);
+        intent.putExtra(PhotoActivity.PHOTO_URL, photo.getUrlO());
+        startActivity(intent);
     }
 }
