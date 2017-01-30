@@ -23,9 +23,10 @@ import rx.schedulers.Schedulers;
 public class RecentPhotosPresenter extends BasePresenter {
 
     private static final String TAG = RecentPhotosPresenter.class.getSimpleName();
+
     private RecentPhotosView mView;
     private Model mModel;
-    private int mCurrentPage = 1;
+    private int mCurrentPage = 0;
 
     public RecentPhotosPresenter(RecentPhotosView mView) {
         this.mView = mView;
@@ -33,7 +34,7 @@ public class RecentPhotosPresenter extends BasePresenter {
     }
 
     public void loadPhotos(){
-        Subscription subscription = mModel.getRecentPhotos(10, mCurrentPage).subscribe(new Action1<Photos>() {
+        Subscription subscription = mModel.getRecentPhotos(6, mCurrentPage++).subscribe(new Action1<Photos>() {
             @Override
             public void call(Photos photos) {
                 mCurrentPage = photos.getPage();
@@ -49,7 +50,7 @@ public class RecentPhotosPresenter extends BasePresenter {
     }
 
     public void loadBitmap(final ImageView imageView, URL url){
-        mModel.getPhotoFromUrl(url)
+        Subscription subscription = mModel.getPhotoFromUrl(url)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Bitmap>() {
@@ -58,6 +59,7 @@ public class RecentPhotosPresenter extends BasePresenter {
                         imageView.setImageBitmap(bitmap);
                     }
                 });
+        addSubscription(subscription);
     }
 
     private void showError(Throwable throwable){

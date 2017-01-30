@@ -46,11 +46,10 @@ public class ModelImpl implements Model {
        return Observable.create(new Observable.OnSubscribe<Bitmap>() {
            @Override
            public void call(Subscriber<? super Bitmap> subscriber) {
-               Bitmap bitmap = null;
                InputStream inputStream = null;
                try {
                    inputStream = url.openStream();
-                   bitmap = BitmapFactory.decodeStream(inputStream);
+                   Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                    subscriber.onNext(bitmap);
                    subscriber.onCompleted();
                } catch (IOException e) {

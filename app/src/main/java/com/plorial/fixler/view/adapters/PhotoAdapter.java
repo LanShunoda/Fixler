@@ -49,9 +49,8 @@ public class PhotoAdapter extends ArrayAdapter<Photo>{
             DisplayMetrics metrics = new DisplayMetrics();
             ((AppCompatActivity)context).getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
-            URL photoUrl = null;
             try {
-                photoUrl = new URL(photo.getUrlQ());
+                URL photoUrl = new URL(photo.getUrlQ());
 
                 switch(metrics.densityDpi){
                     case DisplayMetrics.DENSITY_LOW:
@@ -73,10 +72,10 @@ public class PhotoAdapter extends ArrayAdapter<Photo>{
                         photoUrl = new URL(photo.getUrlL());
                         break;
                 }
+                mPresenter.loadBitmap(imageView, photoUrl);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
-            mPresenter.loadBitmap(imageView, photoUrl);
         }
         return view;
     }
